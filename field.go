@@ -11,7 +11,7 @@ type Field struct {
 	state  [][]int
 }
 
-//Field.state == -2 or -1 or 0 or 1 or 2 or 3
+//Field.state == -1 or 0 ~ 8 or 10 ~ 18
 //-1: not open with mine
 //0 ~ 8: not open and the number of mine surrounding
 //10 ~ 18: open and the number of mine surrounding
@@ -40,7 +40,7 @@ func (self *Field) RefreshField() {
 func (self *Field) Choose(row, column byte) {
 	if 0 <= self.state[row][column] && self.state[row][column] <= 8 {
 		self.state[row][column] += 10 //open
-	} if self.state[row][column] == -1 {
+	} else if self.state[row][column] == -1 {
 		// game over
 	}
 
