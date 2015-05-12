@@ -62,11 +62,77 @@ func (self *Field) RefreshField() {
 
 }
 
+func (self *Field) RecursiveOpen(row, column byte) {
+	self.state[row][column] += 10
+	if row == 0 || row == self.height+1 || column == 0 || column == self.width+1 {
+		return
+	}
+	if 0 <= self.state[row-1][column-1] && self.state[row-1][column-1] <= 8 {
+		if self.state[row-1][column-1] == 0 {
+			self.RecursiveOpen(row-1, column-1)
+		} else {
+			self.state[row-1][column-1] += 10
+		}
+	}
+	if 0 <= self.state[row-1][column] && self.state[row-1][column] <= 8 {
+		if self.state[row-1][column] == 0 {
+			self.RecursiveOpen(row-1, column)
+		} else {
+			self.state[row-1][column] += 10
+		}
+	}
+	if 0 <= self.state[row-1][column+1] && self.state[row-1][column+1] <= 8 {
+		if self.state[row-1][column+1] == 0 {
+			self.RecursiveOpen(row-1, column+1)
+		} else {
+			self.state[row-1][column+1] += 10
+		}
+	}
+	if 0 <= self.state[row][column-1] && self.state[row][column-1] <= 8 {
+		if self.state[row][column-1] == 0 {
+			self.RecursiveOpen(row, column-1)
+		} else {
+			self.state[row][column-1] += 10
+		}
+	}
+	if 0 <= self.state[row][column+1] && self.state[row][column+1] <= 8 {
+		if self.state[row][column+1] == 0 {
+			self.RecursiveOpen(row, column+1)
+		} else {
+			self.state[row][column+1] += 10
+		}
+	}
+	if 0 <= self.state[row+1][column-1] && self.state[row+1][column-1] <= 8 {
+		if self.state[row+1][column-1] == 0 {
+			self.RecursiveOpen(row+1, column-1)
+		} else {
+			self.state[row+1][column-1] += 10
+		}
+	}
+	if 0 <= self.state[row+1][column] && self.state[row+1][column] <= 8 {
+		if self.state[row+1][column] == 0 {
+			self.RecursiveOpen(row+1, column)
+		} else {
+			self.state[row+1][column] += 10
+		}
+	}
+	if 0 <= self.state[row+1][column+1] && self.state[row+1][column+1] <= 8 {
+		if self.state[row+1][column+1] == 0 {
+			self.RecursiveOpen(row+1, column+1)
+		} else {
+			self.state[row+1][column+1] += 10
+		}
+	}
+}
+
 func (self *Field) Choose(row, column byte) {
 	row += 1
 	column += 1
-	if 0 <= self.state[row][column] && self.state[row][column] <= 8 {
-		self.state[row][column] += 10 //open
+	if 0 == self.state[row][column] {
+		self.RecursiveOpen(row, column)
+		//self.state[row][column] += 10 //open
+	} else if 0 < self.state[row][column] && self.state[row][column] <= 8 {
+		self.state[row][column] += 10
 	} else if self.state[row][column] == -1 {
 		self.state[row][column] += -1
 	}
