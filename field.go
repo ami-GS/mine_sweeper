@@ -197,6 +197,7 @@ func InputLoop(field *Field) {
 			continue
 		}
 		field.Choose(pos[0][0]-ZERO-1, pos[1][0]-ZERO-1)
+		fmt.Println("\x1b[2J")
 	}
 }
 
