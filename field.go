@@ -18,6 +18,8 @@ type Field struct {
 //0 ~ 8: not open and the number of mine surrounding
 //10 ~ 18: open and the number of mine surrounding
 
+const ZERO byte = 48
+
 func NewField(width, height, mineNum byte) *Field {
 	field := &Field{width, height, [][]int{}}
 	field.state = make([][]int, height+2)
@@ -185,7 +187,6 @@ func (self *Field) FieldString() (out string) {
 func InputLoop(field *Field) {
 	var input string
 	var pos [][]byte
-	var ZERO byte = 48
 	for {
 		fmt.Scanln(&input)
 		in := []byte(input)
