@@ -188,6 +188,7 @@ func InputLoop(field *Field) {
 	var input string
 	var pos [][]byte
 	for {
+		fmt.Printf("\r%s", field.FieldString())
 		fmt.Scanln(&input)
 		in := []byte(input)
 		pos = bytes.Split(in, []byte(","))
@@ -196,12 +197,30 @@ func InputLoop(field *Field) {
 			continue
 		}
 		field.Choose(pos[0][0]-ZERO-1, pos[1][0]-ZERO-1)
-		fmt.Printf("\r%s", field.FieldString())
 	}
 }
 
-func main() {
-	field := NewField(8, 8, 6)
-	fmt.Printf("\r%s", field.FieldString())
+func PlayGame() {
+	var input string
+	var field *Field
+set:
+	fmt.Printf("Input width, height, (num of mine) (e.g : 8,8(,9))\n>> ")
+	fmt.Scanln(&input)
+	in := []byte(input)
+	pos := bytes.Split(in, []byte(","))
+	if len(pos) == 3 {
+		field = NewField(pos[0][0]-ZERO, pos[1][0]-ZERO, pos[2][0]-ZERO)
+	} else if len(pos) == 2 {
+		fmt.Println("The number of mine is set to 25% automatically")
+		p := byte((pos[0][0] - ZERO) * (pos[1][0] - ZERO) / 4)
+		field = NewField(pos[0][0]-ZERO, pos[1][0]-ZERO, p)
+	} else {
+		fmt.Println("Please input 3 numerical value")
+		goto set
+	}
 	InputLoop(field)
+}
+
+func main() {
+	PlayGame()
 }
