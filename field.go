@@ -1,9 +1,10 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"math/rand"
+	"strconv"
+	"strings"
 )
 
 type Field struct {
@@ -186,17 +187,18 @@ func (self *Field) FieldString() (out string) {
 
 func InputLoop(field *Field) {
 	var input string
-	var pos [][]byte
+	var pos []string
 	for {
 		fmt.Printf("\r%s", field.FieldString())
 		fmt.Scanln(&input)
-		in := []byte(input)
-		pos = bytes.Split(in, []byte(","))
+		pos = strings.Split(input, ",")
 		if len(pos) != 2 {
 			fmt.Println("2 values should be input")
 			continue
 		}
-		field.Choose(pos[0][0]-ZERO-1, pos[1][0]-ZERO-1)
+		x, _ := strconv.Atoi(pos[0])
+		y, _ := strconv.Atoi(pos[1])
+		field.Choose(byte(x)-1, byte(y)-1)
 		fmt.Println("\x1b[2J")
 	}
 }
@@ -207,14 +209,19 @@ func PlayGame() {
 set:
 	fmt.Printf("Input width, height, (num of mine) (e.g : 8,8(,9))\n>> ")
 	fmt.Scanln(&input)
-	in := []byte(input)
-	pos := bytes.Split(in, []byte(","))
+	pos := strings.Split(input, ",")
+	var h, w, m int
 	if len(pos) == 3 {
-		field = NewField(pos[0][0]-ZERO, pos[1][0]-ZERO, pos[2][0]-ZERO)
+		w, _ = strconv.Atoi(pos[0])
+		h, _ = strconv.Atoi(pos[1])
+		m, _ = strconv.Atoi(pos[2])
+		field = NewField(byte(w), byte(h), byte(m))
 	} else if len(pos) == 2 {
+		w, _ = strconv.Atoi(pos[0])
+		h, _ = strconv.Atoi(pos[1])
 		fmt.Println("The number of mine is set to 25% automatically")
-		p := byte((pos[0][0] - ZERO) * (pos[1][0] - ZERO) / 4)
-		field = NewField(pos[0][0]-ZERO, pos[1][0]-ZERO, p)
+		p := byte(w * h / 4)
+		field = NewField(byte(w), byte(h), p)
 	} else {
 		fmt.Println("Please input 3 numerical value")
 		goto set
