@@ -188,6 +188,7 @@ func (self *Field) FieldString() (out string) {
 func InputLoop(field *Field) {
 	var input string
 	var pos []string
+	var x, y int
 	for {
 		fmt.Printf("\r%s", field.FieldString())
 		fmt.Scanln(&input)
@@ -196,8 +197,8 @@ func InputLoop(field *Field) {
 			fmt.Println("2 values should be input")
 			continue
 		}
-		x, _ := strconv.Atoi(pos[0])
-		y, _ := strconv.Atoi(pos[1])
+		x, _ = strconv.Atoi(pos[0])
+		y, _ = strconv.Atoi(pos[1])
 		field.Choose(byte(x)-1, byte(y)-1)
 		fmt.Println("\x1b[2J")
 	}
