@@ -206,24 +206,29 @@ func InputLoop(field *Field) {
 func PlayGame() {
 	var input string
 	var field *Field
+	//var err error
+	var h, w, m int
 set:
 	fmt.Printf("Input width, height, (num of mine) (e.g : 8,8(,9))\n>> ")
 	fmt.Scanln(&input)
 	pos := strings.Split(input, ",")
-	var h, w, m int
-	if len(pos) == 3 {
+	if len(pos) == 2 || len(pos) == 3 {
 		w, _ = strconv.Atoi(pos[0])
 		h, _ = strconv.Atoi(pos[1])
-		m, _ = strconv.Atoi(pos[2])
+		if len(pos) == 2 {
+			m = w * h / 4
+		} else {
+			m, _ = strconv.Atoi(pos[2])
+		}
+		// err is always nil (bug?), then value is 0
+		//if err != nil {
+		if w == 0 || h == 0 || m == 0 {
+			fmt.Println("Please input 2 or 3 numerical values (value > 0)")
+			goto set
+		}
 		field = NewField(byte(w), byte(h), byte(m))
-	} else if len(pos) == 2 {
-		w, _ = strconv.Atoi(pos[0])
-		h, _ = strconv.Atoi(pos[1])
-		fmt.Println("The number of mine is set to 25% automatically")
-		p := byte(w * h / 4)
-		field = NewField(byte(w), byte(h), p)
 	} else {
-		fmt.Println("Please input 3 numerical value")
+		fmt.Println("Please input 2 or 3 numerical values (value > 0)")
 		goto set
 	}
 	InputLoop(field)
