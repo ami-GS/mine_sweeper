@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "../../mine_sweeper"
+	. "github.com/ami-GS/mine_sweeper"
 )
 
 func main() {
