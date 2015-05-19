@@ -184,23 +184,26 @@ func (self *Field) FieldString() (out string) {
 }
 
 func InputLoop(field *Field) {
-	var input string
+	var input, header string
 	var pos []string
 	var r, c int
 	for {
-		fmt.Printf("\r%s", field.FieldString())
+		fmt.Printf("%s\n%s", header, field.FieldString())
 		fmt.Scanln(&input)
 		pos = strings.Split(input, ",")
 		if len(pos) != 2 {
-			fmt.Println("2 values should be input")
-			continue
+			header = "\x1b[2J\n2 values should be input"
+		} else {
+			r, _ = strconv.Atoi(pos[0])
+			c, _ = strconv.Atoi(pos[1])
+			if 0 < byte(r) && byte(r) <= field.height && 0 < byte(r) && byte(c) <= field.width {
+				field.Choose(byte(r)-1, byte(c)-1)
+				header = "\x1b[2J"
+			} else {
+				header = fmt.Sprintf("\x1b[2J\n2 values should be input (1 <= height <= %d, 1 <= width <= %d)",
+					field.height, field.width)
+			}
 		}
-		r, _ = strconv.Atoi(pos[0])
-		c, _ = strconv.Atoi(pos[1])
-		if 0 < byte(r) && byte(r) <= field.height && 0 < byte(r) && byte(c) <= field.width {
-			field.Choose(byte(r)-1, byte(c)-1)
-		}
-		fmt.Println("\x1b[2J")
 	}
 }
 
