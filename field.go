@@ -166,13 +166,13 @@ func (self *Field) FieldString() (out string) {
 		field += fmt.Sprintf("%d ", r)
 		for c := 1; c < int(self.width)+1; c++ {
 			if -1 <= self.state[r][c] && self.state[r][c] <= 8 {
-				field += "[ ]"
+				field += CLOSED
 			} else if self.state[r][c] == 10 {
-				field += "___"
+				field += OPENED
 			} else if 10 < self.state[r][c] {
-				field += fmt.Sprintf("_%d_", self.state[r][c]-10)
+				field += fmt.Sprintf(OPEN_NUM, self.state[r][c]-10)
 			} else if self.state[r][c] == 9 {
-				field += "_*_"
+				field += MINE
 			}
 			field += " "
 		}
