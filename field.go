@@ -1,4 +1,4 @@
-package main
+package mine_sweeper
 
 import (
 	"fmt"
@@ -233,8 +233,4 @@ set:
 		goto set
 	}
 	InputLoop(field)
-}
-
-func main() {
-	PlayGame()
 }
