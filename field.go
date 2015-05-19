@@ -13,10 +13,10 @@ type Field struct {
 	state  [][]int
 }
 
-//Field.state == -2 or -1 or 0 ~ 8 or 10 ~ 18
-//-2: opened with mine
+//Field.state == -1 ~ 18
 //-1: not open with mine
 //0 ~ 8: not open and the number of mine surrounding
+//9: open with mine
 //10 ~ 18: open and the number of mine surrounding
 
 const ZERO byte = 48
@@ -73,9 +73,7 @@ func (self *Field) AllOpen() {
 	var r, c byte
 	for r = 1; r < self.height+1; r++ {
 		for c = 1; c < self.width+1; c++ {
-			if self.state[r][c] <= -1 {
-				self.state[r][c] -= 1
-			} else if self.state[r][c] <= 8 {
+			if -1 <= self.state[r][c] && self.state[r][c] <= 8 {
 				self.Open(r, c)
 			}
 		}
@@ -173,7 +171,7 @@ func (self *Field) FieldString() (out string) {
 				field += "___"
 			} else if 10 < self.state[r][c] {
 				field += fmt.Sprintf("_%d_", self.state[r][c]-10)
-			} else if self.state[r][c] == -2 {
+			} else if self.state[r][c] == 9 {
 				field += "_*_"
 			}
 			field += " "
