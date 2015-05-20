@@ -61,10 +61,6 @@ func NewField(width, height, mineNum byte) *Field {
 	return field
 }
 
-func (self *Field) RefreshField() {
-
-}
-
 func (self *Field) Open(row, column byte) {
 	self.state[row][column] += 10
 }
