@@ -2,6 +2,7 @@ package mine_sweeper
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -152,14 +153,24 @@ func (self *Field) Choose(row, column byte) {
 }
 
 func (self *Field) FieldString() (out string) {
-	header := "  "
+	// make indices of first row
+	header := " "
+	for len(header) < int(math.Log10(float64(self.height)))+2 {
+		header += " "
+	}
 	for c := 0; c < int(self.width); c++ {
 		header += fmt.Sprintf(" %d  ", c+1)
 	}
 
+	// make rows with index
 	field := fmt.Sprintf("%s\n", header)
 	for r := 1; r < int(self.height)+1; r++ {
-		field += fmt.Sprintf("%d ", r)
+		tmp := fmt.Sprintf("%d", r)
+		for len(tmp) < int(math.Log10(float64(self.height)))+2 {
+			tmp += " "
+		}
+		field += tmp
+
 		for c := 1; c < int(self.width)+1; c++ {
 			if -1 <= self.state[r][c] && self.state[r][c] <= 8 {
 				field += CLOSED
@@ -176,7 +187,7 @@ func (self *Field) FieldString() (out string) {
 			field += "\n"
 		}
 	}
-	return fmt.Sprintf("%s", field)
+	return fmt.Sprintf("%s>> ", field)
 }
 
 func InputLoop(field *Field) {
