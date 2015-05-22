@@ -34,7 +34,7 @@ func NewField(width, height, mineNum byte) *Field {
 	var pos [][2]byte = make([][2]byte, mineNum)
 	idx := rand.Perm(int(width * height)) // [0,n)
 	for i := 0; i < int(mineNum); i++ {
-		pos[i] = [2]byte{(byte(idx[i]) / height) + 1, (byte(idx[i]) % width) + 1}
+		pos[i] = [2]byte{(byte(idx[i]) / width) + 1, (byte(idx[i]) % width) + 1}
 		// set surround
 		field.state[pos[i][0]-1][pos[i][1]-1] += 1
 		field.state[pos[i][0]-1][pos[i][1]] += 1
@@ -215,7 +215,7 @@ func PlayGame() {
 	//var err error
 	var h, w, m int
 set:
-	fmt.Printf("Input width, height, (num of mine) (e.g : 8,8(,9))\n>> ")
+	fmt.Printf("Input height, width (num of mine) (e.g : 8,8(,9))\n>> ")
 	fmt.Scanln(&input)
 	pos := strings.Split(input, ",")
 	if len(pos) == 2 || len(pos) == 3 {
@@ -232,7 +232,7 @@ set:
 			fmt.Println("Please input 2 or 3 numerical values (value > 0)")
 			goto set
 		}
-		field = NewField(byte(w), byte(h), byte(m))
+		field = NewField(byte(h), byte(w), byte(m))
 	} else {
 		fmt.Println("Please input 2 or 3 numerical values (value > 0)")
 		goto set
