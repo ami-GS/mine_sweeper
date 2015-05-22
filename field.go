@@ -26,27 +26,15 @@ func NewField(width, height, mineNum byte) *Field {
 	field := &Field{width, height, [][]int{}}
 	field.state = make([][]int, height+2)
 
-	var Combination [][2]byte
-	Combination = make([][2]byte, width*height)
 	for i := 0; i < int(height)+2; i++ {
 		field.state[i] = make([]int, width+2)
 	}
 
-	mNum := 0
-	for i := 0; i < int(height); i++ {
-		for j := 0; j < int(width); j++ {
-			Combination[mNum][0] = byte(i + 1)
-			Combination[mNum][1] = byte(j + 1)
-			mNum += 1
-		}
-	}
-
 	// set mine
 	var pos [][2]byte = make([][2]byte, mineNum)
+	idx := rand.Perm(int(width * height)) // [0,n)
 	for i := 0; i < int(mineNum); i++ {
-		idx := rand.Intn(int(width*height) - i)
-		pos[i] = Combination[idx]
-		Combination = append(Combination[:idx], Combination[idx+1:]...)
+		pos[i] = [2]byte{(byte(idx[i]) / height) + 1, (byte(idx[i]) % width) + 1}
 		// set surround
 		field.state[pos[i][0]-1][pos[i][1]-1] += 1
 		field.state[pos[i][0]-1][pos[i][1]] += 1
