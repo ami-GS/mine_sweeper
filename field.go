@@ -31,10 +31,13 @@ func NewField(width, height, mineNum byte) *Field {
 	for i := 0; i < int(height)+2; i++ {
 		field.state[i] = make([]int, width+2)
 	}
+
+	mNum := 0
 	for i := 0; i < int(height); i++ {
 		for j := 0; j < int(width); j++ {
-			Combination[i*int(height)+j][0] = byte(i + 1)
-			Combination[i*int(height)+j][1] = byte(j + 1)
+			Combination[mNum][0] = byte(i + 1)
+			Combination[mNum][1] = byte(j + 1)
+			mNum += 1
 		}
 	}
 
