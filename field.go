@@ -162,7 +162,11 @@ func (self *Field) FieldString() (out string) {
 		header += " "
 	}
 	for c := 0; c < int(self.width); c++ {
-		header += fmt.Sprintf(" %d  ", c+1)
+		tmp := fmt.Sprintf(" %d", c+1)
+		for len(tmp) < 4 {
+			tmp += " " // TODO: here should be optimized
+		}
+		header += tmp
 	}
 
 	// make rows with index
