@@ -131,7 +131,8 @@ func (self *Field) RecursiveOpen(row, column byte) {
 	}
 }
 
-func (self *Field) Choose(row, column byte) {
+func (self *Field) Choose(row, column byte) (gameover bool) {
+	gameover = false
 	row += 1
 	column += 1
 	if 0 == self.state[row][column] {
@@ -140,7 +141,9 @@ func (self *Field) Choose(row, column byte) {
 		self.Open(row, column)
 	} else if self.state[row][column] == -1 {
 		self.AllOpen() // game over
+		return true
 	}
+	return
 }
 
 func (self *Field) FieldString() (out string) {
@@ -199,8 +202,14 @@ func InputLoop(field *Field) {
 			r, _ = strconv.Atoi(pos[0])
 			c, _ = strconv.Atoi(pos[1])
 			if 0 < byte(r) && byte(r) <= field.height && 0 < byte(r) && byte(c) <= field.width {
-				field.Choose(byte(r)-1, byte(c)-1)
-				header = "\x1b[2J"
+				gameover := field.Choose(byte(r)-1, byte(c)-1)
+				if gameover {
+					header = "\x1b[2J======== GAME OVER ========="
+					fmt.Printf("%s\n%s", header, field.FieldString())
+					break //messy!!
+				} else {
+					header = "\x1b[2J"
+				}
 			} else {
 				header = fmt.Sprintf("\x1b[2J\n2 values should be input (1 <= height <= %d, 1 <= width <= %d)",
 					field.height, field.width)
