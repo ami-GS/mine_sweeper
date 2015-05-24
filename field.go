@@ -224,7 +224,7 @@ func PlayGame() {
 	//var err error
 	var h, w, m int
 set:
-	fmt.Printf("Input height, width (num of mine) (e.g : 8,8(,9))\n>> ")
+	fmt.Printf("Input height, width, (num of mine) (e.g : 8,8(,9))\n>> ")
 	fmt.Scanln(&input)
 	pos := strings.Split(input, ",")
 	if len(pos) == 2 || len(pos) == 3 {

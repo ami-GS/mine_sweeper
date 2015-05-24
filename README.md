@@ -5,7 +5,7 @@ mine sweeper on CUI
 ### Usage
 ```
 >> go run example/play.go
->> Input width, height, (num of mine) (e.g : 8,8(,9))
+>> Input height, width, (num of mine) (e.g : 8,8(,9))
 >> 4,4,3
    1   2   3   4
 1 [ ] [ ] [ ] [ ]
