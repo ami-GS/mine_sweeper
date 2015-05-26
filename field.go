@@ -146,7 +146,7 @@ func (self *Field) Choose(row, column byte) (gameover bool) {
 	return
 }
 
-func (self *Field) FieldString() (out string) {
+func (self *Field) FieldString() string {
 	// make indices of first row
 	header := " "
 	for len(header) < int(math.Log10(float64(self.height)))+2 {
