@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <string.h>
 #include <math.h>
 #include "field.h"
@@ -92,39 +93,39 @@ int Field::Choose(int row, int column) {
 }
 
 std::string Field::FieldString() {
-  std::string out;
+  std::stringstream out, tmp;
   std::string header;
-  std::string tmp;
   while (header.length() < (int)log10((double)height)+2) {header += " ";}
-  std::cout << "1" << std::endl;
   for (int c = 0; c < width; c++) {
-    tmp = " %s", c+1;
-    while (tmp.length() < 4) {tmp += " ";}
-    header += tmp;
+    tmp << " " << c+1;
+    while (tmp.str().length() < 4) {tmp << " ";}
+    header += tmp.str();
+    tmp.str("");
   }
-  out = header + "\n";
+  out << header + "\n";
   for (int r = 1; r < height+1; r++) {
-    tmp = "%d", r;
-    while (tmp.length() < (int)log10((double)height)+2) {tmp += " ";}
-    out += tmp;
+    tmp << r;
+    while (tmp.str().length() < (int)log10((double)height)+2) {tmp << " ";}
+    out << tmp.str();
+    tmp.str("");
     for (int c = 1; c < width+1; c++) {
       if (-1 <= ww[r][c] && ww[r][c] <= 8) {
-	out += "[ ]";
+	out << "[ ]";
       } else if (ww[r][c] == 10) {
-	out += "___";
+	out << "___";
       } else if (10 < ww[r][c]) {
-	out += "_%d_", ww[r][c]-10;
+	out << "_" << ww[r][c]-10 << "_";
       } else if (ww[r][c] == 9) {
-	out += "_*_";
+	out << "_*_";
       }
-      out += " ";
+      out << " ";
     }
     if (r < height) {
-      out += "\n";
+      out << "\n";
     }
   }
   
-  return "%s>> ", out;
+  return out.str() + ">> ";
 }
 
 int main() {
