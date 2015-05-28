@@ -128,16 +128,17 @@ std::string Field::FieldString() {
     return out.str() + ">> ";
 }
 
+void InputLoop(Field* f) {
+    std::string input, header;
+    while (1) {
+        std::cout << header << "\n" << f->FieldString() << std::endl;
+        std::cin >> input; // need split
+        }
+}
+
 int main() {
     Field *f1;
     f1 = new Field(10,10,10);
-    for (int i = 1; i < 11; i++) {
-        for (int j = 1; j < 11; j++) {
-            std::cout << f1->ww[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << f1->FieldString() << std::endl;
-    std::cout << "aiueo\n" << std::endl;
+    InputLoop(f1);
     return 0;
 }
