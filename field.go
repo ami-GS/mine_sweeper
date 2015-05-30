@@ -175,7 +175,7 @@ func (self *Field) FieldString() string {
 			} else if self.state[r][c] == 10 {
 				field += OPENED
 			} else if 10 < self.state[r][c] {
-				field += fmt.Sprintf(OPEN_NUM, self.state[r][c]-10)
+				field += OPEN_NUM[self.state[r][c]-11]
 			} else if self.state[r][c] == 9 {
 				field += MINE
 			}
