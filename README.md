@@ -29,6 +29,9 @@ mine sweeper on CUI
 4 _1_ _*_ _1_ ___ >>
 ```
 
+### TODO
+* Implement flag (_^_) and predict (_?_)
+
 
 ### License
 The MIT License (MIT) Copyright (c) 2015 ami-GS
