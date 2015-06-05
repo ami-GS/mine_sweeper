@@ -132,7 +132,7 @@ void InputLoop(Field* f) {
     std::string input, header;
     std::string* ans;
     while (1) {
-        std::cout << header << "\n" << f->FieldString() << std::endl;
+        std::cout << header << "\n" << f->FieldString() << std::flush;
         std::cin >> input; // need split
         ans = Split(input, ",");
         }
