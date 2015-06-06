@@ -135,6 +135,7 @@ void InputLoop(Field* f) {
         std::cout << header << "\n" << f->FieldString() << std::flush;
         std::cin >> input; // need split
         ans = Split(input, ",");
+        delete [] ans;
         }
 }
 
