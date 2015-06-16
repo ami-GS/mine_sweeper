@@ -201,7 +201,7 @@ func InputLoop(field *Field) {
 		} else {
 			r, _ = strconv.Atoi(pos[0])
 			c, _ = strconv.Atoi(pos[1])
-			if 0 < byte(r) && byte(r) <= field.height && 0 < byte(r) && byte(c) <= field.width {
+			if 0 < byte(r) && byte(r) <= field.height && 0 < byte(c) && byte(c) <= field.width {
 				gameover := field.Choose(byte(r)-1, byte(c)-1)
 				if gameover {
 					header = "\x1b[2J======== GAME OVER ========="
