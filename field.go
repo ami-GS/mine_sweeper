@@ -33,6 +33,7 @@ func NewField(width, height, mineNum byte) *Field {
 	// set mine
 	var pos [][2]byte = make([][2]byte, mineNum)
 	idx := rand.Perm(int(width * height)) // [0,n)
+	fmt.Println(idx)
 	for i := 0; i < int(mineNum); i++ {
 		pos[i] = [2]byte{(byte(idx[i]) / width) + 1, (byte(idx[i]) % width) + 1}
 		// set surround
@@ -45,6 +46,7 @@ func NewField(width, height, mineNum byte) *Field {
 		field.state[pos[i][0]+1][pos[i][1]] += 1
 		field.state[pos[i][0]+1][pos[i][1]+1] += 1
 	}
+	fmt.Println(pos)
 	for i := 0; i < int(mineNum); i++ {
 		// put mine
 		field.state[pos[i][0]][pos[i][1]] = -1
