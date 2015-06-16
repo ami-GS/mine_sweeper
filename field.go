@@ -33,6 +33,7 @@ func NewField(width, height, mineNum byte) *Field {
 	// set mine
 	var pos [][2]byte = make([][2]byte, mineNum)
 	idx := rand.Perm(int(width * height)) // [0,n)
+	fmt.Println(idx)
 	for i := 0; i < int(mineNum); i++ {
 		pos[i] = [2]byte{(byte(idx[i]) / width) + 1, (byte(idx[i]) % width) + 1}
 		// set surround
@@ -45,6 +46,7 @@ func NewField(width, height, mineNum byte) *Field {
 		field.state[pos[i][0]+1][pos[i][1]] += 1
 		field.state[pos[i][0]+1][pos[i][1]+1] += 1
 	}
+	fmt.Println(pos)
 	for i := 0; i < int(mineNum); i++ {
 		// put mine
 		field.state[pos[i][0]][pos[i][1]] = -1
@@ -201,7 +203,7 @@ func InputLoop(field *Field) {
 		} else {
 			r, _ = strconv.Atoi(pos[0])
 			c, _ = strconv.Atoi(pos[1])
-			if 0 < byte(r) && byte(r) <= field.height && 0 < byte(r) && byte(c) <= field.width {
+			if 0 < byte(r) && byte(r) <= field.height && 0 < byte(c) && byte(c) <= field.width {
 				gameover := field.Choose(byte(r)-1, byte(c)-1)
 				if gameover {
 					header = "\x1b[2J======== GAME OVER ========="
