@@ -79,17 +79,15 @@ void Field::RecursiveOpen(int row, int column) {
 }
 
 int Field::Choose(int row, int column) {
-    row += 1;
-    column += 1;
     if (ww[row][column] == 0) {
         RecursiveOpen(row, column);
     } else if (0 < ww[row][column] && ww[row][column] <= 8) {
         Open(row, column);
     } else if (ww[row][column] == -1){
         AllOpen();
-        return 1;
+        return -1;
     }
-    return -1;
+    return 1;
 }
 
 std::string Field::FieldString() {
@@ -145,15 +143,18 @@ void InputLoop(Field* f) {
             r = std::stoi(strVec[0]);
             c = std::stoi(strVec[1]);
             if (0 < r && r <= f->height && 0 < c && c <= f->width) {
-                
+                if (f->Choose(r, c)) {
+                    header = "\x1b[2J";
+                } else {
+                    std::cout << "\x1b[2J========== GAME OVER ==========" << std::endl;
+                    std::cout << header << "\n" << f->FieldString() << std::flush;
+                    break;
+                }
+            } else {
+                //header = "\x1b[2J2 values should be input (1 <= height <= " << f->height << ", 1 <= width <= " << f->width << ")";
             }
         }
-        //for (int i = 0; i < 2; i++) {
-        //std::cout << ans[i] << std::endl;
-        //}
-        //delete [] ans;
-        
-        }
+    }
 }
 
 int main() {
