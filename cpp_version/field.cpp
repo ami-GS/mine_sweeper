@@ -130,12 +130,29 @@ std::string Field::FieldString() {
 
 void InputLoop(Field* f) {
     std::string input, header;
-    std::string* ans;
+    std::vector<std::string> strVec;
+    int r, c;
     while (1) {
         std::cout << header << "\n" << f->FieldString() << std::flush;
         std::cin >> input; // need split
-        ans = Split(input, ",");
-        delete [] ans;
+        strVec = Split(input, ",");
+        for (int i = 0; i < 2; i++) {
+            std::cout << strVec[i] << std::endl;
+        }
+        if (strVec.size() != 2) {
+            std::cout << "\x1b[2J\n2 values should be input" << std::endl;            
+        } else {
+            r = std::stoi(strVec[0]);
+            c = std::stoi(strVec[1]);
+            if (0 < r && r <= f->height && 0 < c && c <= f->width) {
+                
+            }
+        }
+        //for (int i = 0; i < 2; i++) {
+        //std::cout << ans[i] << std::endl;
+        //}
+        //delete [] ans;
+        
         }
 }
 

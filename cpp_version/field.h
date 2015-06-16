@@ -1,4 +1,5 @@
 #include <random>
+#include <vector>
 
 class Field {
 public:
@@ -62,20 +63,23 @@ const std::string CLOSED = "[ ]";
 const std::string OPENED = "___";
 const std::string MINE = "_*_";
 
-std::string* Split(std::string str, std::string substr) {
-    std::string*  ans = new std::string[3]; // ?
+std::vector<std::string> Split(std::string str, std::string substr) {
     std::string tmp;
     int num, loc;
     num = 0;
+    std::vector<std::string> strVec;
     while (1) {
         loc = str.find(substr, 0);
         if (loc == std::string::npos) {
+            strVec.push_back(str);
             break;
         }
-        for (int i = 0; i < loc+1; i++) {
+        for (int i = 0; i < loc; i++) {
             tmp += str.at(i);
         }
-        ans[num] = tmp;
+        strVec.push_back(tmp);
+        tmp = "";
+        str = str.substr(loc+1);
     }
-    return ans;
+    return strVec;
 }
