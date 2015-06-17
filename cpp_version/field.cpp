@@ -134,9 +134,6 @@ void InputLoop(Field* f) {
         std::cout << header << "\n" << f->FieldString() << std::flush;
         std::cin >> input; // need split
         strVec = Split(input, ",");
-        for (int i = 0; i < 2; i++) {
-            std::cout << strVec[i] << std::endl;
-        }
         if (strVec.size() != 2) {
             std::cout << "\x1b[2J\n2 values should be input" << std::endl;            
         } else {
