@@ -10,7 +10,9 @@ void Field::Open(int row, int column) {
 void Field::AllOpen() {
     for (int r = 1; r < height+1; r++) {
         for (int c = 1; c < width+1; c++) {
-            Open(r, c);
+            if (-1 <= ww[r][c] && ww[r][c] <= 8) {
+                Open(r, c);
+            }
         }
     }
 }
