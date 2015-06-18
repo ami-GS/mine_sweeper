@@ -129,28 +129,30 @@ std::string Field::FieldString() {
 }
 
 void InputLoop(Field* f) {
-    std::string input, header;
+    std::string input;
+    std::stringstream header;
     std::vector<std::string> strVec;
     int r, c;
     while (1) {
-        std::cout << header << "\n" << f->FieldString() << std::flush;
+        std::cout << header.str() << "\n" << f->FieldString() << std::flush;
+        header.str("");
         std::cin >> input; // need split
         strVec = Split(input, ",");
         if (strVec.size() != 2) {
-            std::cout << "\x1b[2J\n2 values should be input" << std::endl;            
+            header << "\x1b[2J\n2 values should be input";
         } else {
             r = std::stoi(strVec[0]);
             c = std::stoi(strVec[1]);
             if (0 < r && r <= f->height && 0 < c && c <= f->width) {
                 if (f->Choose(r, c)) {
-                    header = "\x1b[2J";
+                    header << "\x1b[2J";
                 } else {
                     std::cout << "\x1b[2J========== GAME OVER ==========" << std::endl;
-                    std::cout << header << "\n" << f->FieldString() << std::flush;
+                    std::cout << header.str() << "\n" << f->FieldString() << std::flush;
                     break;
                 }
             } else {
-                //header = "\x1b[2J2 values should be input (1 <= height <= " << f->height << ", 1 <= width <= " << f->width << ")";
+                header << "\x1b[2J2 values should be input (1 <= height <= " << f->height << ", 1 <= width <= " << f->width << ")";
             }
         }
     }
