@@ -165,31 +165,31 @@ void PlayGame() {
     std::vector<std::string> strVec;
 
     std::cout << "Input height, width, (num of mine) (e.g : 8,8,(,9))\n>> " << std::flush;
-    std::cin >> input;
-    strVec = Split(input, ",");
-    if (strVec.size() == 2 || strVec.size() == 3) {
-        w = std::stoi(strVec[0]);
-        h = std::stoi(strVec[1]);
-        if (strVec.size() == 2) {
-            m = w * h / 4;
+    while (1) {
+        std::cin >> input;
+        strVec = Split(input, ",");
+        if (strVec.size() == 2 || strVec.size() == 3) {
+            w = std::stoi(strVec[0]);
+            h = std::stoi(strVec[1]);
+            if (strVec.size() == 2) {
+                m = w * h / 4;
+            } else {
+                m = std::stoi(strVec[2]);
+            }
+
+            if (w == 0 || h == 0 || m == 0) {
+                std::cout << "Please input 2 or 3 numerical values (value > 0)";
+            }
+            f = new Field(h, w, m);
+            break;
         } else {
-            m = std::stoi(strVec[2]);
-        }
-        if (w == 0 || h == 0 || m == 0) {
             std::cout << "Please input 2 or 3 numerical values (value > 0)";
-            // not goto, but should be loop
         }
-        f = new Field(h, w, m);
-    } else {
-        std::cout << "Please input 2 or 3 numerical values (value > 0)";
-        // not goto, but should be loop
     }
     InputLoop(f);
 }
 
 int main() {
-    Field *f1;
-    f1 = new Field(10,10,10);
-    InputLoop(f1);
+    PlayGame();
     return 0;
 }
