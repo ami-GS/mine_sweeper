@@ -7,7 +7,7 @@ public:
     int height;
     int **ww;
     Field(int width, int height, int mineNum) : width(width), height(height) {
-        ww = new int*[height];
+        ww = new int*[height+2];
         for (int i = 0; i < height+2; i++) {
             ww[i] = new int[width+2];
             for (int j = 0; j < width+2; j++) {
