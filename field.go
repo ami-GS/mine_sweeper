@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Field struct {
@@ -32,6 +33,7 @@ func NewField(width, height, mineNum byte) *Field {
 
 	// set mine
 	var pos [][2]byte = make([][2]byte, mineNum)
+	rand.Seed(time.Now().UTC().UnixNano())
 	idx := rand.Perm(int(width * height)) // [0,n)
 	fmt.Println(idx)
 	for i := 0; i < int(mineNum); i++ {
