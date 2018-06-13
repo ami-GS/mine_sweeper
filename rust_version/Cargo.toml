@@ -1,0 +1,10 @@
+[package]
+name = "rust_version"
+version = "0.1.0"
+authors = ["ami-GS <1991.daiki@gmail.com>"]
+
+[dependencies]
+rand = "0.5.1"
+
+[build-dependencies]
+rand = "0.5.1"
